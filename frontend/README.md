@@ -17,14 +17,18 @@ cd frontend/nachschreibeverwaltung
 npm install -g @angular/cli
 ```
 ---
-3. Alle nötigen Abhängigkeiten, Libraries etc. mit folgendem Befehl herunterladen:
+3. Yarn installieren:
 ```
-npm install
+npm i -g yarn
 ```
 ---
-4. App starten/bauen. Das localhost:4200 Fenster öffnet sich automatisch.
+4. Yarn ausführen
 ```
-ng serve -o
+yarn
+```
+4. App starten/bauen. Unter http://localhost:4200/ im Browser findet man die App.
+```
+yarn start
 ```
 
 
