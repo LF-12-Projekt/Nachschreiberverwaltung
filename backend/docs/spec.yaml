@@ -1,0 +1,226 @@
+openapi: 3.0.1
+info:
+  title: School Resit Exam Management API
+  description: API for managing resit exams, participants, and teacher messages in a school.
+  version: 1.0.0
+tags:
+  - name: Login
+    description: authenticate users
+  - name: Resit
+    description: create, read, update and delete resit exams
+  - name: Messages
+    description: write, return and delete messages
+
+paths:
+  /auth/login:
+    post:
+      summary: User login
+      tags:
+        - Login
+      description: Authenticates the user via their SSID and returns a JWT token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ssid:
+                  type: string
+                  example: 123456789
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                  role:
+                    type: string
+                    example: student
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /auth/logout:
+    post:
+      summary: User logout
+      tags:
+          - Login
+      description: Invalidates the current JWT token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+      responses:
+        200:
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Logout successful
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /resit:
+    post:
+      summary: Create a resit exam
+      tags:
+        - Resit
+      description: Creates a new resit exam for a specific course.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                courseId:
+                  type: string
+                  example: 123456
+                date:
+                  type: string
+                  format: date
+                time:
+                  type: string
+                  format: time
+                room:
+                  type: string
+                  example: 123
+      responses:
+        201:
+          description: Resit exam created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  resitId:
+                    type: string
+                    example: 123456
+                  message:
+                    type: string
+                    example: Resit exam created successfully
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /resit/course/{courseId}:
+    get:
+      summary: Get resit exams for a course
+      tags:
+        - Resit
+      description: Retrieves all resit exams for a specific course.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Resit exams retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resitId:
+                      type: string
+                    date:
+                      type: string
+                      format: date
+                    time:
+                      type: string
+                      format: time
+                    room:
+                      type: string
+  /resit/{resitId}/participants:
+    get:
+      summary: Get participants for a resit exam
+      tags:
+        - Resit
+      description: Lists all students registered for a specific resit exam.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: resitId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Participants retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    studentId:
+                      type: string
+                      example: 123456
+                    name:
+                      type: string
+                      example: Lisa Müller
+components:
+  responses:
+    UnauthorizedError:
+      description: authorization information is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UnauthorizedError'
+    InternalServerError:
+        description: an internal server error occurred.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InternalServerError'
+  schemas:
+    UnauthorizedError:
+      type: object
+      required:
+        - Error
+      properties:
+        Status:
+          type: string
+          example: 401
+        Message:
+          type: string
+          example: error details
+        Error:
+          type: string
+          example: unauthorized user
+
+    InternalServerError:
+      type: object
+      required:
+        - Error
+      properties:
+        Status:
+          type: string
+          example: 500
+        Message:
+          type: string
+          example: error details
+        Error:
+          type: string
+          example: internal server error
