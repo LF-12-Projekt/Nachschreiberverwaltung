@@ -24,4 +24,4 @@ down-db:
 
 
 
-.PHONY: help external-network up-db run down-db
+.PHONY: help external-network up-db db-init run down-db
