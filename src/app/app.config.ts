@@ -11,11 +11,12 @@ import { IconDefinition } from '@ant-design/icons-angular';
 const icons: IconDefinition[] = [UserOutline];
 
 import en from '@angular/common/locales/en';
+import {provideHttpClient} from "@angular/common/http";
 registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes),
-    provideAnimations(), provideNzI18n(en_US), provideNzIcons(icons)
+    provideAnimations(), provideNzI18n(en_US), provideNzIcons(icons), provideHttpClient()
   ]
 };
