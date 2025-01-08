@@ -1,0 +1,18 @@
+nz-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+nz-content {
+    margin: 5rem;
+}
+
+nz-header {
+    background-color: white;
+    height: 80px;
+}
+
+nz-footer {
+    background-color: white;
+}
