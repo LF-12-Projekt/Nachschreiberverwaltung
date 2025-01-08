@@ -5,15 +5,14 @@ from app.models import *
 
 main = Blueprint('main', __name__)
 
-# Temporary dummy data, wie prob von db übergeben
-# Schema ist name : role
+# Temporary dummy data, wie prob zukuenftig von db
 userTeacher = {
     "name": "lehrPerson",
-    "userrole": "lehrer"
+    "role": "lehrer"
 }
 userStudent = {
     "name": "schulPerson",
-    "userrole": "schueler"
+    "role": "schueler"
 }
 
 users=[userTeacher,userStudent]
@@ -22,19 +21,18 @@ users=[userTeacher,userStudent]
 def home():
     return "Hello, World!"
 
-#methods=['GET', 'POST'] überlegen ob so
-@main.route('/auth/login', 'POST')
+
+@main.route('/auth/login', methods=['GET', 'POST'])
 def login():
     if request.method != 'POST':
         return 405 # Method not allowed error
     else:
-        # hier abgeändert
         name = request.form.get("name")
 
-        # hier zukünftig richtige Datenbankabfrage
+        # hier zukünftig richtige Datenbankabfrage - ausgelagert nach models
         for person in users:
             if name in person:
-                return jsonify({"validation":True,"userrole":person.get("userrole")})
+                return jsonify({"validation":True,"role":person.get("role")})
         else:
             flash("Ungültiger name")
-            return redirect(url_for("login"))
+            return redirect(url_for("auth/login"))

@@ -1,7 +1,3 @@
-def do_login():
-    # siehe routes
-    return
-
-def show_login_form():
-    # Hier Anzeigen von Login-page?
+def check_login_data():
+    # siehe routes - sobald da, anzuwenden auf die DB
     return
