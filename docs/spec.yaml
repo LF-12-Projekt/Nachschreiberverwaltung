@@ -180,6 +180,40 @@ paths:
                     name:
                       type: string
                       example: Lisa Müller
+  /resit/list/{studentId}:
+    get:
+      summary: Get resit exams for a student
+      tags:
+        - Resit
+      description: Retrieves all resit exams for a specific student.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Resit exams retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resitId:
+                      type: string
+                    date:
+                      type: string
+                      format: date
+                    time:
+                      type: string
+                      format: time
+                    room:
+                      type: string
 components:
   responses:
     UnauthorizedError:
