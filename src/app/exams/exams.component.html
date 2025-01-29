@@ -1,0 +1,20 @@
+<a (click)="goBack()" class="return">< zurück</a>
+<div class="exams-header mt-3">
+    <h1>Kursname</h1>
+    <button (click)="goToMissingStudents()" nz-button nzType="primary">fehlende Schüler</button>
+
+</div>
+
+<br/>
+<nz-list nzBordered>
+    <nz-list-item *ngFor="let exam of exams">
+        <span nz-typography>{{ exam }}</span>
+        <button (click)="openExamEditor(exam)" nz-button nzType="primary">Bearbeiten</button>
+    </nz-list-item>
+</nz-list>
+
+<div class="create-button">
+    <button class="mt-5" (click)="goToExamCreator()" nz-button nzType="primary">Nachschreibetermin erstellen</button>
+    
+</div>
+
