@@ -1,1 +1,13 @@
-<p>exam-editor works!</p>
+<h5 class="m-4">{{examName}}</h5>
+
+<nz-date-picker nzFormat="dd/MM/YYYY" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
+<br />
+
+<nz-select class="mt-3 select"
+        nzMode="multiple"
+        nzPlaceHolder="Select users"
+        nzAllowClear
+        nzShowSearch
+        [(ngModel)]="selectedUsers">
+    <nz-option *ngFor="let user of users" [nzValue]="user" [nzLabel]="user"></nz-option>
+</nz-select>
