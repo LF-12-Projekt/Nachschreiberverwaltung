@@ -6,6 +6,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import {LoginService} from "../../services/login.service";
 import {Router} from "@angular/router";
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +15,12 @@ import {Router} from "@angular/router";
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
+  
   public isVisible: boolean = false;
   public username: string = '';
   public loggedIn: boolean = false;
   
-  constructor(private loginService: LoginService, private router: Router) {
+  constructor(private loginService: LoginService, private router: Router, private msg: NzMessageService) {
     
   }
 
@@ -31,15 +33,15 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    /* TODO: change when endpoint is done
     this.loginService.login(this.username).subscribe(res => {
       this.isVisible = false
       this.loggedIn = true;
       localStorage.setItem('loggedIn', this.loggedIn.toString());
-    })*/
+    })
     this.loggedIn = true;
     this.isVisible = false;
     this.router.navigate(['home']);
+    this.msg.success("Sie haben sich erfolgreich angemeldet.")
     this.loginService.emitUser(this.username);
   }
 
