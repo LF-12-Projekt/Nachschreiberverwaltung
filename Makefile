@@ -17,7 +17,7 @@ db-init:
 	docker run --rm --net dcsnetwork mariadb:10.6 mysql -h"MakeupExamDB" -P3306 -uroot -e "`cat $$PWD/init*.sql`"
 
 run:
-	python app.py
+	python controllers.py
 
 down-db:
 	docker-compose down
