@@ -25,7 +25,7 @@ paths:
             schema:
               type: object
               properties:
-                ssid:
+                ssId:
                   type: string
                   example: 123456789
       responses:
@@ -180,7 +180,7 @@ paths:
                     name:
                       type: string
                       example: Lisa Müller
-  /resit/list/{studentId}:
+  /resit/list/{ssId}:
     get:
       summary: Get resit exams for a student
       tags:
@@ -189,11 +189,12 @@ paths:
       security:
         - BearerAuth: [ ]
       parameters:
-        - name: studentId
+        - name: ssId
           in: path
           required: true
           schema:
             type: string
+            example: 123456789
       responses:
         200:
           description: Resit exams retrieved successfully
@@ -205,6 +206,8 @@ paths:
                   type: object
                   properties:
                     resitId:
+                      type: string
+                    resitName:
                       type: string
                     date:
                       type: string
