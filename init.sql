@@ -1,8 +1,10 @@
 CREATE DATABASE IF NOT EXISTS MakeupExamDB;
 USE MakeupExamDB;
 
-CREATE TABLE IF NOT EXISTS Student (
-    ssId VARCHAR(30) PRIMARY KEY
+CREATE TABLE IF NOT EXISTS User (
+    ssId VARCHAR(30) PRIMARY KEY,
+    username VARCHAR(30),
+    role ENUM('teacher', 'student')
 );
 CREATE TABLE IF NOT EXISTS Course (
     courseId VARCHAR(30) PRIMARY KEY,
@@ -14,7 +16,7 @@ CREATE TABLE IF NOT EXISTS StudentCourse (
     ssId VARCHAR(30),
     courseId VARCHAR(30),
     PRIMARY KEY (ssId, courseId),
-    FOREIGN KEY (ssId) REFERENCES Student(ssId)  ON DELETE CASCADE,
+    FOREIGN KEY (ssId) REFERENCES User(ssId)  ON DELETE CASCADE,
     FOREIGN KEY (courseId) REFERENCES Course(courseId)  ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS Room (
@@ -36,10 +38,10 @@ CREATE TABLE IF NOT EXISTS ResitExamCourse (
     FOREIGN KEY (room) REFERENCES Room(roomId)  ON DELETE CASCADE
 );
 /* Dummy Daten zu Testzwecken*/
-INSERT INTO Student (ssId) VALUES
-('123456789'),
-('987654321'),
-('555555555');
+INSERT INTO User (ssId, username, role) VALUES
+('123456789', 'stefanus', 'teacher'),
+('987654321', 'brigitte', 'teacher'),
+('555555555', 'hans', 'student');
 INSERT INTO Course (courseId, courseName) VALUES
 ('1', 'LF11a'),
 ('2', 'LF10a'),

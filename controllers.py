@@ -1,8 +1,21 @@
 from flask import Flask, jsonify, request
-from models import ResitExamModel
+from models import ResitExamModel, LoginModel
 
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
+def home():
+    return "Hello World"
+
+@app.route('/<username>', methods=['GET'])
+def login(username):
+    # Return der Userdaten, inklusive Rolle und ssId
+    userdata = LoginModel.check_login_data(username)
+
+    if not userdata:
+        return jsonify({"message": "No user found for this username."}), 404
+
+    return jsonify(userdata), 200
 
 @app.route('/resit/list/<ss_id>', methods=['GET'])
 def get_resit_exams(ss_id):
