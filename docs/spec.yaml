@@ -25,7 +25,7 @@ paths:
             schema:
               type: object
               properties:
-                ssid:
+                ssId:
                   type: string
                   example: 123456789
       responses:
@@ -180,6 +180,43 @@ paths:
                     name:
                       type: string
                       example: Lisa Müller
+  /resit/list/{ssId}:
+    get:
+      summary: Get resit exams for a student
+      tags:
+        - Resit
+      description: Retrieves all resit exams for a specific student.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: ssId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 123456789
+      responses:
+        200:
+          description: Resit exams retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resitId:
+                      type: string
+                    resitName:
+                      type: string
+                    date:
+                      type: string
+                      format: date
+                    time:
+                      type: string
+                      format: time
+                    room:
+                      type: string
 components:
   responses:
     UnauthorizedError:

@@ -1,0 +1,18 @@
+<nz-modal [(nzVisible)]="isVisible" [nzFooter]="null" (nzOnCancel)="closeModal()" nzCentered>
+    <ng-container class="body" *nzModalContent>
+        <img class="logo mt-5" src="../../assets/Oberstufenzentrum_Informations-_und_Medizintechnik_logo.svg" alt="logo"
+            width="250">
+        <h5>Nachschreiberverwaltung</h5>
+
+        <nz-input-group class="mt-3 mb-3" [nzPrefix]="userIcon">
+            <input (keyup.enter)="login()" [(ngModel)]="username" nzSize="default" nz-input placeholder="Anmeldename" />
+        </nz-input-group>
+
+        <ng-template #userIcon>
+            <i nz-icon nzType="user" nzTheme="outline"></i>
+        </ng-template>
+        <br />
+        <button (click)="login()" class="mb-5 mt-2" nzSize="large" nz-button nzType="primary">Anmelden</button>
+    </ng-container>
+
+</nz-modal>
