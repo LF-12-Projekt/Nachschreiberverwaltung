@@ -130,12 +130,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: X-User-Role
-          in: header
-          required: true
-          schema:
-            type: string
-            example: teacher
       responses:
         200:
           description: Courses retrieved successfully
