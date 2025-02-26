@@ -21,9 +21,7 @@ export class LoginComponent implements OnInit {
   public loggedIn: boolean = false;
   
   constructor(private loginService: LoginService, private router: Router, private msg: NzMessageService) {
-    
   }
-
   ngOnInit(): void {
     this.isVisible = true;
   }

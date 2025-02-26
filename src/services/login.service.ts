@@ -6,7 +6,7 @@ import {BehaviorSubject, catchError, throwError} from "rxjs";
   providedIn: 'root'
 })
 export class LoginService {
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'http://127.0.0.1:8080';
   constructor(private httpClient: HttpClient) { }
     userSubject: BehaviorSubject<string> = new BehaviorSubject<string>("");
     username$ = this.userSubject.asObservable();
