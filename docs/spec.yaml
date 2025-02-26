@@ -180,21 +180,27 @@ paths:
                     name:
                       type: string
                       example: Lisa Müller
-  /resit/list/{ssId}:
+  /resit/{courseId}:
     get:
-      summary: Get resit exams for a student/teacher
+      summary: Get resit exams by a given course ID
       tags:
-        - Resit
-      description: Retrieves all resit exams for a specific student or teacher.
+        - User
+      description: Retrieves all resit exams for a specified student or teacher.
       security:
         - BearerAuth: [ ]
       parameters:
-        - name: ssId
+        - name: courseId
           in: path
           required: true
           schema:
             type: string
             example: 123456789
+        - name: X-User-Role
+          in: header
+          required: true
+          schema:
+            type: string
+            example: student
       responses:
         200:
           description: Resit exams retrieved successfully
