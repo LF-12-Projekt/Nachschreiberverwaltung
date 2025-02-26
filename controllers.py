@@ -1,9 +1,10 @@
 from flask import Flask, jsonify, request
 from models import ResitExamModel, CourseModel
+from flask_cors import CORS
+
 
 app = Flask(__name__)
-
-
+CORS(app)
 @app.route('/resit/list/<ss_id>', methods=['GET'])
 def get_resit_exams(ss_id):
     # Abrufen der Resit-Examen für die angegebenen ss_id
