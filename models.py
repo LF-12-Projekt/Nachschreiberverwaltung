@@ -5,13 +5,13 @@ from db import get_db_connection
 
 class ResitExamModel:
     @staticmethod
-    def get_resit_exams_by_student_id(ss_id):
+    def get_resit_exams_by_ss_id(ss_id):
         connection = get_db_connection()
         try:
             with connection.cursor() as cursor:
                 query = """
                     SELECT r.resitId, r.resitName, r.date, r.time, ro.roomName AS room
-                    FROM ResitExamCourse r
+                    FROM ResitExam r
                     JOIN StudentCourse sc ON sc.courseId = r.courseId
                     JOIN Room ro ON ro.roomId = r.room
                     WHERE sc.ssId = %s
@@ -49,5 +49,27 @@ class ResitExamModel:
                     })
 
                 return exams
+        finally:
+            connection.close()
+
+
+class CourseModel:
+    @staticmethod
+    def get_courses_by_ss_id(ss_id):
+        connection = get_db_connection()
+        try:
+            with connection.cursor() as cursor:
+                query = """
+                    SELECT c.courseId, c.courseName, cl.className
+                    FROM Course c
+                    JOIN ClassCourse cc ON cc.courseId = c.courseId
+                    JOIN Class cl ON cl.classId = cc.classId
+                    JOIN TeacherCourse sc ON sc.courseId = c.courseId
+                    WHERE sc.ssId = %s
+                """
+                cursor.execute(query, (ss_id,))
+                courses = cursor.fetchall()
+
+                return courses
         finally:
             connection.close()
