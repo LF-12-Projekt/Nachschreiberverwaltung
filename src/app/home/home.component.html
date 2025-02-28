@@ -2,14 +2,10 @@
 
 <div nz-row>
     <div nz-col *ngFor="let course of courses" [nzSpan]="8"> <!-- Set the span to control the number of columns -->
-        <nz-card (click)="goToExams()" style="width:100%;" [nzTitle]="course" [nzExtra]="extraTemplate">
-            <p>Card content</p>
-            <p>Card content</p>
-            <p>Card content</p>
+        <nz-card (click)="goToExams(course.courseId)" style="width:100%;" [nzTitle]="course.courseName">
+            <span class="className">Klasse {{ course.className }}</span>
         </nz-card>
     </div>
 </div>
 
-<ng-template #extraTemplate>
-    <span class="className">Klassenname</span>
-</ng-template>
+
