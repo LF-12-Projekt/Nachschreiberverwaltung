@@ -13,9 +13,6 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
   selector: 'app-missing-students',
   imports: [
     NzListModule,
-    NgForOf,
-    NzButtonComponent,
-    NzWaveDirective,
     NzModalModule,
     NzBadgeModule,
     CommonModule

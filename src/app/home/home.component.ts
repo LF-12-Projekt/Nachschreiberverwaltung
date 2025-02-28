@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {NzModalModule} from "ng-zorro-antd/modal";
 import {CommonModule} from "@angular/common";
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import {CoursesService} from "../../services/courses.service";
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,12 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 })
 export class HomeComponent implements OnInit {
   public username: string = '';
-  public courses: any = ["Kursname", "Kursname1", "Kursname2", "Kursname3"];
-  constructor(private loginService: LoginService, private router: Router) {
-    
+  public courses: any;
+  constructor(
+      private loginService: LoginService,
+      private router: Router,
+      private coursesService: CoursesService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -24,10 +28,17 @@ export class HomeComponent implements OnInit {
       this.username = value;
     })
     
+    this.getAlLCourses();
   }
   
-  goToExams(): void {
-    this.router.navigate(['exams']);
+  getAlLCourses() { //TODO: the ssid should come from the localstorage after login
+    this.coursesService.getAllCourses("111111111").subscribe((res) => {
+      this.courses = res;
+    } )
+  }
+  
+  goToExams(courseId: string): void {
+    this.router.navigate(['exams'], {queryParams: {courseId: courseId}});
   }
 
 }
