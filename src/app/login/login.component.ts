@@ -34,13 +34,15 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.username).subscribe(res => {
       this.isVisible = false
       this.loggedIn = true;
+      this.router.navigate(['home']);
+      this.msg.success("Sie haben sich erfolgreich angemeldet.")
+      this.loginService.emitUser(this.username);
+      
       localStorage.setItem('loggedIn', this.loggedIn.toString());
+    }, error => {
+      this.msg.error("Die Logindaten sind falsch.")
     })
-    this.loggedIn = true;
-    this.isVisible = false;
-    this.router.navigate(['home']);
-    this.msg.success("Sie haben sich erfolgreich angemeldet.")
-    this.loginService.emitUser(this.username);
+;
   }
 
 }

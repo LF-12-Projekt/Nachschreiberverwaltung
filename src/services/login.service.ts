@@ -15,7 +15,7 @@ export class LoginService {
       this.userSubject.next(username);
   }
   login(username: string) {
-    return this.httpClient.post(`${this.baseUrl}/auth/login`, {}).pipe(
+    return this.httpClient.get(`${this.baseUrl}/${username}`, {}).pipe(
         catchError(err => {
               console.log(err);
               return throwError(() => new Error('An error occurred during login.'));
