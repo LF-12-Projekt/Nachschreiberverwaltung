@@ -16,8 +16,8 @@ import {ExamCreatorComponent} from "../exam-creator/exam-creator.component";
 export class ExamsComponent implements OnInit {
   courseId: string = '';
   exams: { title: string; date: Date, users: string[] }[] = [
-    { title: "Nachschreibeklausur 1", date: new Date(2025, 4, 10), users: ["John"]}, // 10th May 2025
-    { title: "Nachschreibeklausur 2", date: new Date(2025, 5, 15), users: ["John", "Alice"] }, // 15th June 2025
+    { title: "Nachschreibeklausur 1", date: new Date(2025, 4, 10), users: []}, // 10th May 2025
+    { title: "Nachschreibeklausur 2", date: new Date(2025, 5, 15), users: [] }, // 15th June 2025
   ];  
   selectedUsers: string[] = [];
   exams1: any;
@@ -59,6 +59,10 @@ export class ExamsComponent implements OnInit {
             this.selectedUsers = modalRef.getContentComponent().passData();
             console.log('Data saved!');
             console.log(this.selectedUsers);
+            let exam = this.exams.find((exam) => exam.title == examName)
+            if (exam) {
+              exam.users = this.selectedUsers;
+            }
             modalRef.destroy();
           }
         }
