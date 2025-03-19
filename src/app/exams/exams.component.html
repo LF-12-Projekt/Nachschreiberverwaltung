@@ -6,12 +6,12 @@
 <br/>
 <nz-list nzBordered>
     <nz-list-item *ngFor="let exam of exams">
-        <span nz-typography>{{ exam }}</span>
-        <button (click)="openExamEditor(exam)" nz-button nzType="primary">Bearbeiten</button>
+        <span nz-typography>{{ exam.title }}</span>
+        <button (click)="openExamEditor(exam.title, exam.date, exam.users)" nz-button nzType="primary">Bearbeiten</button>
     </nz-list-item>
 </nz-list>
 
 <div class="create-button">
-    <button class="mt-5" (click)="goToExamCreator()" nz-button nzType="primary">Nachschreibetermin erstellen</button>
+    <button class="mt-5" (click)="openExamCreator()" nz-button nzType="primary">Nachschreibetermin erstellen</button>
 </div>
 

@@ -1,1 +1,14 @@
-<p>exam-creator works!</p>
+<h2 class="mt-2">Nachschreibeklausur erstellen</h2>
+<div>
+    <input class="mb-2 examName" nz-input placeholder="Klausurname" [(ngModel)]="examName" type="text" /> <br/>
+    <nz-date-picker nzFormat="dd/MM/YYYY" [(ngModel)]="date"></nz-date-picker> <br/>
+    <nz-select class="mt-3 select"
+               nzMode="multiple"
+               nzPlaceHolder="Schüler auswählen"
+               nzAllowClear
+               nzShowSearch
+               [(ngModel)]="selectedUsers">
+        <nz-option *ngFor="let user of users" [nzValue]="user" [nzLabel]="user"></nz-option>
+    </nz-select>
+</div>
+

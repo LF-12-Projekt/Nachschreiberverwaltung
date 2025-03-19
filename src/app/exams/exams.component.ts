@@ -6,6 +6,7 @@ import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ExamEditorComponent} from "../exam-editor/exam-editor.component";
 import {NzModalModule, NzModalService} from "ng-zorro-antd/modal";
+import {ExamCreatorComponent} from "../exam-creator/exam-creator.component";
 @Component({
   selector: 'app-exams',
   imports: [NzButtonModule, NzListModule, FormsModule, CommonModule, NzButtonModule, NzModalModule],
@@ -14,7 +15,10 @@ import {NzModalModule, NzModalService} from "ng-zorro-antd/modal";
 })
 export class ExamsComponent implements OnInit {
   courseId: string = '';
-  exams: string[] = ["Nachschreibeklausur 1", "Nachschreibeklausur 2", "Nachschreibeklausur 3"];
+  exams: { title: string; date: Date, users: string[] }[] = [
+    { title: "Nachschreibeklausur 1", date: new Date(2025, 4, 10), users: ["John"]}, // 10th May 2025
+    { title: "Nachschreibeklausur 2", date: new Date(2025, 5, 15), users: ["John", "Alice"] }, // 15th June 2025
+  ];  
   selectedUsers: string[] = [];
   exams1: any;
 
@@ -27,9 +31,6 @@ export class ExamsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(queryParams => {
       this.courseId = queryParams['courseId'];
-      console.log("queryparams", queryParams);
-      console.log("courseid:" + this.courseId);
-      
     });
   }
 
@@ -41,7 +42,7 @@ export class ExamsComponent implements OnInit {
 
   }
 
-  openExamEditor(examName: string): void {
+  openExamEditor(examName: string, date: Date, users: string[]): void {
     const modalRef = this.modal.create({
       nzContent: ExamEditorComponent,
       nzFooter: [
@@ -66,10 +67,37 @@ export class ExamsComponent implements OnInit {
       nzBodyStyle: {'height': '85%'},
     });
     modalRef.getContentComponent().examName = examName;
+    modalRef.getContentComponent().date = date;
+    modalRef.getContentComponent().selectedUsers = users;
   }
 
-  goToExamCreator() {
-
+  openExamCreator() {
+    const modalRef = this.modal.create({
+      nzContent: ExamCreatorComponent,
+      nzFooter: [
+        {
+          label: 'Abbrechen',
+          onClick: () => {
+            modalRef.destroy();
+          }
+        },
+        {
+          label: 'Speichern',
+          type: 'primary',
+          onClick: () => {
+            this.selectedUsers = modalRef.getContentComponent().selectedUsers;
+            this.exams.push({
+              title: modalRef.getContentComponent().examName, 
+              date: modalRef.getContentComponent().date,
+              users: modalRef.getContentComponent().selectedUsers,
+            },)
+            modalRef.destroy();
+          }
+        }
+      ],
+      nzStyle: {'max-width': '60vw'},
+      nzBodyStyle: {'height': '85%'},
+    });
   }
 
 }
