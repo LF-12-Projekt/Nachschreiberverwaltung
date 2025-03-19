@@ -91,13 +91,9 @@ CREATE TABLE IF NOT EXISTS ResitExamStudent (
 );
 /* Dummy Daten zu Testzwecken*/
 INSERT INTO User (ssId, username, role) VALUES
-('123456789', 'test', 'teacher'),
-('987654321', 'test', 'student'),
-('555555555', 'test', 'student'),
-('111111111', 'test', 'teacher'),
-('222222222', 'test', 'student'),
-('333333333', 'test', 'student');
-
+('123456789', 'stefanus', 'teacher'),
+('987654321', 'brigitte', 'teacher'),
+('555555555', 'hans', 'student');
 INSERT INTO Course (courseId, courseName) VALUES
 ('1', 'LF11a'),
 ('2', 'LF10a'),

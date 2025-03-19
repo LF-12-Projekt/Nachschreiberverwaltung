@@ -15,6 +15,8 @@ up-db:
 
 db-init:
 	docker run --rm --net dcsnetwork mariadb:10.6 mysql -h"MakeupExamDB" -P3306 -uroot -e "`cat $$PWD/init*.sql`"
+	# Bei Windows:
+	# docker run --rm --net dcsnetwork mariadb:10.6 mysql -h"MakeupExamDB" -P3306 -uroot -e "$(Get-Content $PWD\init*.sql -Raw)"
 
 run:
 	python controllers.py

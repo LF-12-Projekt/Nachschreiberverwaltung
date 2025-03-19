@@ -2,6 +2,23 @@ from datetime import datetime, timedelta
 
 from db import get_db_connection
 
+class LoginModel:
+    @staticmethod
+    def check_login_data(username):
+        connection = get_db_connection()
+        try:
+            with connection.cursor() as cursor:
+                query = """
+                    SELECT ssId, username, role
+                    FROM User
+                    WHERE username = %s
+                """
+                cursor.execute(query, (username,))
+                userdata = cursor.fetchall()
+
+                return userdata
+        finally:
+            connection.close()
 
 class ResitExamModel:
     @staticmethod
