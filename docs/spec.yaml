@@ -116,23 +116,23 @@ paths:
                     example: Resit exam created successfully
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /resit/course/{courseId}:
+  /courses/{ssId}:
     get:
-      summary: Get resit exams for a course
+      summary: Get all courses for a teacher
       tags:
-        - Resit
-      description: Retrieves all resit exams for a specific course.
+        - Teacher
+      description: Retrieves all courses for a specific teacher.
       security:
         - BearerAuth: [ ]
       parameters:
-        - name: courseId
+        - name: ssId
           in: path
           required: true
           schema:
             type: string
       responses:
         200:
-          description: Resit exams retrieved successfully
+          description: Courses retrieved successfully
           content:
             application/json:
               schema:
@@ -180,21 +180,27 @@ paths:
                     name:
                       type: string
                       example: Lisa Müller
-  /resit/list/{ssId}:
+  /resit/{courseId}:
     get:
-      summary: Get resit exams for a student
+      summary: Get resit exams by a given course ID
       tags:
-        - Resit
-      description: Retrieves all resit exams for a specific student.
+        - User
+      description: Retrieves all resit exams for a specified student or teacher.
       security:
         - BearerAuth: [ ]
       parameters:
-        - name: ssId
+        - name: courseId
           in: path
           required: true
           schema:
             type: string
             example: 123456789
+        - name: X-User-Role
+          in: header
+          required: true
+          schema:
+            type: string
+            example: student
       responses:
         200:
           description: Resit exams retrieved successfully
